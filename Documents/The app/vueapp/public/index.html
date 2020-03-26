@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <social-sharing url="https://vuejs.org/"
+  title="The Progressive JavaScript Framework"
+  description="Intuitive, Fast and Composable MVVM for building interactive interfaces."
+  quote="Vue is a progressive framework for building user interfaces."
+  hashtags="vuejs,javascript,framework"
+  twitter-user="vuejs"
+  inline-template>
+      <div>
+      <network network="email">
+      <i class="fa fa-envelope"></i> Email
+      </network>
+      <network network="facebook">
+      <i class="fa fa-facebook"></i> Facebook
+      </network>
+      <network network="googleplus">
+      <i class="fa fa-google-plus"></i> Google +
+      </network>
+      <network network="reddit">
+      <i class="fa fa-reddit"></i> Reddit
+      </network>
+      <network network="skype">
+      <i class="fa fa-skype"></i> Skype
+      </network>
+      <network network="twitter">
+      <i class="fa fa-twitter"></i> Twitter
+      </network>
+      </div>
+      </social-sharing>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto|Roboto+Mono&display=swap" rel="stylesheet">
+    <title>COVID-19 TRACKER NGUYEN LE</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/dist/vue-social-sharing.min.js"></script>
+</head>
+<script>
+  var SocialSharing = require('vue-social-sharing');
+  Vue.use(SocialSharing);
+  Vue.$root.$on('social_shares_open', function (network, url) {
+  // your event code
+});
+</script>
+
+<body>
+    <div class="wrapper">
+        <div class="statistic">
+
+            <div class="total_case_box" >
+              <h2>
+                <a href="https://experience.arcgis.com/experience/685d0ace521648f8a5beeeee1b9125cd" target="_blank" style="text-decoration: none" style="background-color: none;">Total Cases</a>
+               </h2> 
+                <p id="total_cases"></p>
+            </div>
+           <div class="box_wrapper">
+                <div class="box" id="total_death_box">
+                  <h2>
+                    <a href="https://experience.arcgis.com/experience/685d0ace521648f8a5beeeee1b9125cd" target="_blank" style="text-decoration: none" style="background-color: none;">Total Deaths</a>
+                   </h2> 
+                    <p id="total_death"> </p>
+                </div>
+
+                <div class="box" id="total_recovered_box">
+                    <h2>Total Recovery</h2>
+                    <p id="total_recovered"> </p>
+                </div>
+
+                <div class="box" id="new_case_box">
+                    <h2>New case</h2>
+                    <p id="new_case"> </p>
+                </div>
+
+                <div class="box" id="new_death_box">
+                    <h2>New Death</h2>
+                    <p id="new_death"> </p>
+                </div>
+           </div> 
+           <table id="countries_stat">
+               <tr>
+                   <th onclick=sortTable(0)><i class="fa fa-fw fa-sort"></i>Country</th>
+                   <th onclick=sortData(1)>Cases<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(2)>Today's Cases<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(3)>Deaths<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(4)>Today's Deaths<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(5)>Recovered Cases<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(6)>Active Cases<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(7)>Critical Cases<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(8)>Cases Per One Million<i class="fa fa-fw fa-sort"></i></th>
+                   <th onclick=sortData(9)>Deaths Per One Million<i class="fa fa-fw fa-sort"></i></th>
+               </tr>
+           </table>
+        </div>
+    </div>
+    <script src='scripts/main.js'></script>
+    <script>
+      function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("countries_stat");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc"; 
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+          // Start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /* Loop through all table rows (except the
+          first, which contains table headers): */
+          for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place,
+            based on the direction, asc or desc: */
+            if (dir == "asc") {
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount ++; 
+          } else {
+            /* If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+      }
+      function sortData(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("countries_stat");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc"; 
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+          // Start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /* Loop through all table rows (except the
+          first, which contains table headers): */
+          for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place,
+            based on the direction, asc or desc: */
+            if (dir == "asc") {
+              if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount ++; 
+          } else {
+            /* If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+      }
+      </script>
+     
+      
+      
+</body>
+</html>
